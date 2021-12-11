@@ -1,9 +1,25 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 import Header from "../../utils/header";
 import Content from "../../utils/content";
 
+async function getData() {
+    return fetch('http://localhost:5000/' + localStorage.getItem('id')).
+    then(res => res.json()).
+    then(res => {
+        if (!localStorage.getItem('id')){
+            localStorage.setItem('id', res.id)  
+        }
+        console.log(res);
+        return res
+    }).catch(e => console.log(e))
+}
+
 function ToDoList() {
+    const [data, setData] = useState({})
+    useEffect(() => {
+        getData().then(res => setData(({ completed: res.completed, todo: res?.todo})))
+    }, [])
     return (
         <>
             <div className="header">
@@ -19,7 +35,7 @@ function ToDoList() {
                         </div>
                     </div>
                 </div>
-                <Content/>
+                <Content data={data}/>
             </div>
         </>
     )

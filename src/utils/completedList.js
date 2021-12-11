@@ -5,7 +5,7 @@ export default function CompletedList (props) {
 
     return (
         <>
-            <h3 style={{marginBottom: 8}}>Completed ({props.list.length})</h3>
+            <h3 style={{marginBottom: 8}}>Completed ({props.list ? props.list.length : 0})</h3>
             <CompletedItems list={props.list} addItem={props.addItem} removeCompletedItem={props.removeCompletedItem}/>
         </>
     )

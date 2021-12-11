@@ -4,27 +4,91 @@ import AddInput from "./addInput";
 import List from "./list";
 import CompletedList from "./completedList";
 
-export default function Content() {
-    const [todo, setTodo] = useState(['todo 1', 'todo 2', 'todo 3'])
+async function AddTodoItem(item) {
+    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json',
+            'id': localStorage.getItem('id'),
+            'todo': item,
+        },
+    })
+}
+
+async function AddCompetedItem(item) {
+    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+        method: 'POST',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json',
+            'id': localStorage.getItem('id'),
+            'completed': item,
+        },
+    })
+}
+
+async function DeleteTodoItem(item) {
+    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+        method: 'Delete',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json',
+            'id': localStorage.getItem('id'),
+            'todo': item,
+        },
+    })
+}
+
+async function DeleteCompetedItem(item) {
+    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+        method: 'Delete',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json',
+            'id': localStorage.getItem('id'),
+            'todo': item,
+        },
+    })
+}
+
+async function ChangeItem(prev, item) {
+    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+        method: 'PUT',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json',
+            'id': localStorage.getItem('id'),
+            'prevTodo': prev,
+            'todo': item,
+        },
+    })
+}
+
+
+export default function Content(props) {
+    const [todo, setTodo] = useState([])
     const [completed, setCompleted] = useState([])
 
     const addItem = () => {
         return (item) => {
             if (item.length) {
-                setTodo(prev => [...prev, item])
+                AddTodoItem(item).then(() => setTodo(prev => [...prev, item]))
             }
         }
     }
 
     const addCompleted = () => {
         return (index) => {
-            setCompleted([...completed, todo.splice(index, 1)])
+            AddCompetedItem(todo[index])
+            setCompleted(prev => [...prev, todo.splice(index, 1)])
         }
     }
 
     const changeItem = () => {
         return (item, index) => {
             if (item.length) {
+                ChangeItem(todo[index], item)
                 todo.splice(index, 1, item)
                 setTodo(prev => [...prev])
             }
@@ -33,28 +97,31 @@ export default function Content() {
 
     const removeItem = () => {
         return (index) => {
-            todo.splice(index, 1)
+            DeleteTodoItem(todo.splice(index, 1))
             setTodo([...todo])
         }
     }
 
     const removeCompletedItem = () => {
         return (index) => {
-            completed.splice(index, 1)
+            DeleteCompetedItem(completed.splice(index, 1))
             setCompleted([...completed])
         }
     }
 
     useEffect(() => {
-        console.log(todo)
-    }, [todo])
+        if (props.data){
+            setTodo(props.data.todo)
+            setCompleted(props.data.completed)
+        }
+    }, [props.data])
 
     return (
         <div className='content'>
             <div className="left" style={{marginRight: 64}}>
                 <AddInput addItem={addItem}/>
                 <div className='total'>
-                    <span>Total: {todo.length}</span>
+                    <span>Total: {todo ? todo.length : 0}</span>
                 </div>
                 <List list={todo} addCompleted={addCompleted} removeItem={removeItem} changeItem={changeItem}/>
             </div>
