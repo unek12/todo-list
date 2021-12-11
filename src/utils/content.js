@@ -4,8 +4,10 @@ import AddInput from "./addInput";
 import List from "./list";
 import CompletedList from "./completedList";
 
+const api = 'https://unek12-todo-api.herokuapp.com/'
+
 async function AddTodoItem(item) {
-    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+    return fetch(api + localStorage.getItem('id'), {
         method: 'POST',
         headers: {
             'Content-Type':'application/json',
@@ -17,7 +19,7 @@ async function AddTodoItem(item) {
 }
 
 async function AddCompetedItem(item) {
-    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+    return fetch(api + localStorage.getItem('id'), {
         method: 'POST',
         headers: {
             'Content-Type':'application/json',
@@ -29,7 +31,7 @@ async function AddCompetedItem(item) {
 }
 
 async function DeleteTodoItem(item) {
-    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+    return fetch(api + localStorage.getItem('id'), {
         method: 'Delete',
         headers: {
             'Content-Type':'application/json',
@@ -41,7 +43,7 @@ async function DeleteTodoItem(item) {
 }
 
 async function DeleteCompetedItem(item) {
-    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+    return fetch(api + localStorage.getItem('id'), {
         method: 'Delete',
         headers: {
             'Content-Type':'application/json',
@@ -53,7 +55,7 @@ async function DeleteCompetedItem(item) {
 }
 
 async function ChangeItem(prev, item) {
-    return fetch('http://localhost:5000/' + localStorage.getItem('id'), {
+    return fetch(api + localStorage.getItem('id'), {
         method: 'PUT',
         headers: {
             'Content-Type':'application/json',
