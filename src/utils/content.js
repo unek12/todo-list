@@ -4,6 +4,7 @@ import AddInput from "./addInput";
 import List from "./list";
 import CompletedList from "./completedList";
 
+// const api = 'http://localhost:5000/'
 const api = 'https://unek12-todo-api.herokuapp.com/'
 
 async function AddTodoItem(item) {
@@ -18,31 +19,7 @@ async function AddTodoItem(item) {
     })
 }
 
-async function AddCompetedItem(item) {
-    return fetch(api + localStorage.getItem('id'), {
-        method: 'POST',
-        headers: {
-            'Content-Type':'application/json',
-            'Accept':'application/json',
-            'id': localStorage.getItem('id'),
-            'completed': item,
-        },
-    })
-}
-
 async function DeleteTodoItem(item) {
-    return fetch(api + localStorage.getItem('id'), {
-        method: 'Delete',
-        headers: {
-            'Content-Type':'application/json',
-            'Accept':'application/json',
-            'id': localStorage.getItem('id'),
-            'todo': item,
-        },
-    })
-}
-
-async function DeleteCompetedItem(item) {
     return fetch(api + localStorage.getItem('id'), {
         method: 'Delete',
         headers: {
@@ -61,8 +38,21 @@ async function ChangeItem(prev, item) {
             'Content-Type':'application/json',
             'Accept':'application/json',
             'id': localStorage.getItem('id'),
-            'prevTodo': prev,
+            'prevtodo': prev,
             'todo': item,
+        },
+    })
+}
+
+async function ChangeCompleteOfItem(item, completed) {
+    return fetch(api + localStorage.getItem('id'), {
+        method: 'PATCH',
+        headers: {
+            'Content-Type':'application/json',
+            'Accept':'application/json',
+            'id': localStorage.getItem('id'),
+            'todo': item,
+            'completed': completed
         },
     })
 }
@@ -82,7 +72,7 @@ export default function Content(props) {
 
     const addCompleted = () => {
         return (index) => {
-            AddCompetedItem(todo[index])
+            ChangeCompleteOfItem(todo[index], 1)
             setCompleted(prev => [...prev, todo.splice(index, 1)])
         }
     }
@@ -103,10 +93,19 @@ export default function Content(props) {
             setTodo([...todo])
         }
     }
+    
+    const changeCompletedItem = () => {
+        return (index) => {
+            const item = completed.splice(index, 1)
+            setCompleted([...completed])
+            setTodo([...todo, item])
+            ChangeCompleteOfItem(item, 0)
+        }
+    }
 
     const removeCompletedItem = () => {
         return (index) => {
-            DeleteCompetedItem(completed.splice(index, 1))
+            DeleteTodoItem(completed.splice(index, 1))
             setCompleted([...completed])
         }
     }
@@ -128,7 +127,7 @@ export default function Content(props) {
                 <List list={todo} addCompleted={addCompleted} removeItem={removeItem} changeItem={changeItem}/>
             </div>
             <div className="completed">
-                <CompletedList list={completed} addItem={addItem} removeCompletedItem={removeCompletedItem}/>
+                <CompletedList list={completed} changeCompletedItem={changeCompletedItem} removeCompletedItem={removeCompletedItem}/>
             </div>
         </div>
     );

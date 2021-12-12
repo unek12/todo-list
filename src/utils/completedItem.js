@@ -7,8 +7,7 @@ export default function CompletedItem(props) {
             <div className='task--content'>
                 <input type="checkbox" checked={true}
                        onChange={() => {
-                           props.addItem()(...props.item.item)
-                           props.removeCompletedItem()(props.item.index)
+                           props.changeCompletedItem()(props.item.index)
                        }}
                 />
                 <span style={{opacity: .3}}><s>{props.item.item}</s></span>

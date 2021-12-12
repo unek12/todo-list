@@ -3,12 +3,16 @@ import React, {useEffect, useState} from "react";
 import Header from "../../utils/header";
 import Content from "../../utils/content";
 
+// const api = 'http://localhost:5000/'
+const api = 'https://unek12-todo-api.herokuapp.com/'
+
+
 async function getData() {
-    return fetch('https://unek12-todo-api.herokuapp.com/' + localStorage.getItem('id')).
+    return fetch(api + localStorage.getItem('id')).
     then(res => res.json()).
     then(res => {
         if (!localStorage.getItem('id')){
-            localStorage.setItem('id', res.id)  
+            localStorage.setItem('id', res._id)  
         }
         console.log(res);
         return res
@@ -18,7 +22,17 @@ async function getData() {
 function ToDoList() {
     const [data, setData] = useState({completed: [], todo: []})
     useEffect(() => {
-        getData().then(res => setData(({ completed: res.completed, todo: res?.todo})))
+        getData().then(res => {
+            const obj = {todo: [], completed: []}
+            res?.map(item => {
+                if (!item.completed){
+                    obj.todo.push(item.todo)
+                } else {
+                    obj.completed.push(item.todo)
+                }
+            })
+            setData(obj)
+        })
     }, [])
     return (
         <>
