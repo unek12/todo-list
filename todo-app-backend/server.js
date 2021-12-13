@@ -51,7 +51,7 @@ app.patch('/:id', async (req, res) => {
 
 async function start(uri, callback) {
     try {
-        await mongoose.connect("mongodb+srv://egor:L0Vkf130vx7rb7bi@cluster0.vlxx1.mongodb.net/todo-api", {
+        await mongoose.connect("mongodb+srv://egor:<password>@cluster0.vlxx1.mongodb.net/todo-api", {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         })
