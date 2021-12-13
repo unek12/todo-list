@@ -1,9 +1,7 @@
-const {Schema, model} = require('mongoose')
+const {Schema, model, Types} = require('mongoose')
 
 const schema = new Schema({
-    id: String,
-    todo: [String],
-    completed: [String]
+    todo: [{ type: Types.ObjectId, ref: "Todo" }],
 })
 
 module.exports = model('Model', schema)
