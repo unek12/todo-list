@@ -1,28 +1,14 @@
 import React, {useEffect, useState} from "react";
 
-import Header from "../../utils/header";
-import Content from "../../utils/content";
+import Header from "./header";
+import Content from "./content";
 
-// const api = 'http://localhost:5000/'
-const api = 'https://unek12-todo-api.herokuapp.com/'
-
-
-async function getData() {
-    return fetch(api + localStorage.getItem('id')).
-    then(res => res.json()).
-    then(res => {
-        if (!localStorage.getItem('id')){
-            localStorage.setItem('id', res._id)  
-        }
-        console.log(res);
-        return res
-    }).catch(e => console.log(e))
-}
+import { GetData } from '../utils/requests.util'
 
 function ToDoList() {
     const [data, setData] = useState({completed: [], todo: []})
     useEffect(() => {
-        getData().then(res => {
+        GetData().then(res => {
             const obj = {todo: [], completed: []}
             res?.map(item => {
                 if (!item.completed){

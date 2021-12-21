@@ -1,4 +1,4 @@
-import ToDoList from "./pages/ToDoList/ToDoList";
+import ToDoList from "./components/ToDoList";
 
 import './App.scss';
 

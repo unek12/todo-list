@@ -3,60 +3,7 @@ import React, {useEffect, useState} from "react";
 import AddInput from "./addInput";
 import List from "./list";
 import CompletedList from "./completedList";
-
-// const api = 'http://localhost:5000/'
-const api = 'https://unek12-todo-api.herokuapp.com/'
-
-async function AddTodoItem(item) {
-    return fetch(api + localStorage.getItem('id'), {
-        method: 'POST',
-        headers: {
-            'Content-Type':'application/json',
-            'Accept':'application/json',
-            'id': localStorage.getItem('id'),
-            'todo': item,
-        },
-    })
-}
-
-async function DeleteTodoItem(item) {
-    return fetch(api + localStorage.getItem('id'), {
-        method: 'Delete',
-        headers: {
-            'Content-Type':'application/json',
-            'Accept':'application/json',
-            'id': localStorage.getItem('id'),
-            'todo': item,
-        },
-    })
-}
-
-async function ChangeItem(prev, item) {
-    return fetch(api + localStorage.getItem('id'), {
-        method: 'PUT',
-        headers: {
-            'Content-Type':'application/json',
-            'Accept':'application/json',
-            'id': localStorage.getItem('id'),
-            'prevtodo': prev,
-            'todo': item,
-        },
-    })
-}
-
-async function ChangeCompleteOfItem(item, completed) {
-    return fetch(api + localStorage.getItem('id'), {
-        method: 'PATCH',
-        headers: {
-            'Content-Type':'application/json',
-            'Accept':'application/json',
-            'id': localStorage.getItem('id'),
-            'todo': item,
-            'completed': completed
-        },
-    })
-}
-
+import { AddTodoItem, ChangeCompleteOfItem, DeleteTodoItem, ChangeItem } from '../utils/requests.util'
 
 export default function Content(props) {
     const [todo, setTodo] = useState([])
