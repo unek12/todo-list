@@ -10,7 +10,8 @@ function ToDoList() {
     useEffect(() => {
         GetData().then(res => {
             const obj = {todo: [], completed: []}
-            res?.map(item => {
+            
+            res.map(item => {
                 if (!item.completed){
                     obj.todo.push(item.todo)
                 } else {

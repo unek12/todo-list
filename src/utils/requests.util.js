@@ -56,8 +56,8 @@ async function GetData() {
     then(res => {
         if (!localStorage.getItem('id')){
             localStorage.setItem('id', res._id)  
+            return res.todo
         }
-        console.log(res);
         return res
     }).catch(e => console.log(e))
 }
