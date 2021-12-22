@@ -36,27 +36,28 @@ button:active {
 
 .container {
   display: flex;
+  width: 100%;
   height: 100vh;
-  .menu {
-    width: 52px;
-    background: #550DC9;
-    .menu--block {
-      margin-top: 24px;
-      width: 100%;
-      height: 32px;
-      background: #440BA0;
-    }
-    .menu__icon {
-      display: flex;
-      width: 100%;
-      height: 32px;
-      padding: 8px 0;
-      justify-content: center;
-    }
-
-  }
 }
+.menu {
+  width: 52px;
+  min-width: 52px;
+  background: #550DC9;
+  .menu--block {
+    margin-top: 24px;
+    width: 100%;
+    height: 32px;
+    background: #440BA0;
+  }
+  .menu__icon {
+    display: flex;
+    width: 100%;
+    height: 32px;
+    padding: 8px 0;
+    justify-content: center;
+  }
 
+}
 .header {
   display: flex;
   justify-content: space-between;

@@ -1,11 +1,20 @@
-import ToDoList from "./components/ToDoList";
+import {BrowserRouter} from 'react-router-dom'
 
-import './App.scss';
+import Header from "./components/header/Header";
+import Navbar from "./components/navbar/Navbar";
 
-function App() {
+import './styles/App.scss';
+import Router from "./router/Router";
+
+export default function App() {
   return (
-    <ToDoList/>
+    <BrowserRouter>
+      <Header/>
+
+        <div className="container">
+            <Navbar/>
+            <Router/>
+      </div>
+    </BrowserRouter>
   );
 }
-
-export default App
